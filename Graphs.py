@@ -5,8 +5,6 @@
 
 from random import randint
 
-
-
 class Graph():
 	
 	def __init__(self, graphDict = None):
@@ -31,14 +29,14 @@ class Graph():
 	def testBidirectional(self):
 		"""Tests whether the graph is bidirectional, returns True or False"""
 
-		# assume it is bidirectional
+		# Assume it is bidirectional
 		self.bidirectional = True
 
-		# for each edge
+		# For each edge
 		for vertex in self.vertices:
 			for edge in self.edgesOf(vertex):
 
-				# if opposite direction edge doesn't exist set bidirectional to false and double break from the loop
+				# If opposite direction edge doesn't exist set bidirectional to false and double break from the loop
 				if vertex not in self.edgesOf(edge):
 					self.bidirectional = False
 					break
@@ -68,27 +66,27 @@ class Graph():
 
 			while True:
 
-				# randomly select a vertex
+				# Randomly select a vertex
 				vertex = randint(0, noVertices-1)
 
-				# randomly select an edge destination, if bidirectional and the last edge then a loop must be created
+				# Randomly select an edge destination, if bidirectional and the last edge then a loop must be created
 				if i == noEdges - 1:
 					edge = vertex
 				else:
 					edge = randint(0, noVertices-1)
 
-				# if the edge doesn't already exist
+				# If the edge doesn't already exist
 				if edge not in self.graphDict[vertex].keys():
 
-					# randomly select an edge weight
+					# Randomly select an edge weight
 					self.graphDict[vertex][edge] = randint(weightMinimum, weightMaximum)
 
 					if bidirectional and vertex != edge:
 
-						# create the edge in the opposite direction with the same weight
+						# Create the edge in the opposite direction with the same weight
 						self.graphDict[edge][vertex] = self.graphDict[vertex][edge]
 
-						# force a double increment in the iterator as two edges were created
+						# Force a double increment in the iterator as two edges were created
 						next(iterator, None)
 
 					break
@@ -104,17 +102,17 @@ class Graph():
 		If two nodes already share two edges then the weights will remain as they were originally
 		"""
 
-		# if not already bidirectional
+		# If not already bidirectional
 		if not self.bidirectional:
 
-			# for each edge
+			# For each edge
 			for vertex, edgeDict in self.graphDict.items():
 				for edge, weight in edgeDict.items():
 
-					# if the opposite direction edge doesn't already exist
+					# If the opposite direction edge doesn't already exist
 					if vertex not in self.graphDict[edge].keys():
 
-						# add the opposite direction edge
+						# Add the opposite direction edge
 						self.graphDict[edge][vertex] = weight
 					
 			self.generateEdges()
@@ -130,7 +128,7 @@ class Graph():
 		inOutBoth specifies whether to assess just edges into or out of a vertex, or both
 		"""
 
-		# if the vertex exists
+		# If the vertex exists
 		if vertex in self.vertices:
 
 			if inOutBoth == "OUT":
@@ -184,7 +182,7 @@ class Graph():
 	def sortedEdgesOf(self, vertex):
 		"""Get a list of all the destinations of the edges leaving a vertex, ordered by ascending edge weight"""
 
-		# if the vertex exists
+		# If the vertex exists
 		if vertex in self.vertices:
 			return list({k: v for k, v in sorted(self.graphDict[vertex].items(), key=lambda item: item[1])}.keys())
 		else:
@@ -226,10 +224,10 @@ class Graph():
 	def addEdge(self, vertex1, vertex2, weight, bidrectional = False):
 		"""
 		Add an edge from vertex1 to vertex2 with the given weight
-		if bidirectional is true then an edge will also be added from vertex2 to vertex1 with the same weight
+		If bidirectional is true then an edge will also be added from vertex2 to vertex1 with the same weight
 		"""
 
-		# if both vertices exist
+		# If both vertices exist
 		if vertex1 in self.vertices and vertex2 in self.vertices:
 
 			self.graphDict[vertex1][vertex2] = weight
@@ -240,9 +238,9 @@ class Graph():
 			self.generateEdges()
 
 	def removeVertex(self, vertex):
-		"""remove a given vertex from the graph"""
+		"""Remove a given vertex from the graph"""
 
-		# remove any edges going into the vertex
+		# Remove any edges going into the vertex
 		for v in self.vertices:
 			if v != vertex:
 				try:
@@ -250,15 +248,15 @@ class Graph():
 				except:
 					pass
 
-		# remove the vertex itself
+		# Remove the vertex itself
 		del self.graphDict[vertex]
 
 		self.generateEdges()
 
 	def removeEdge(self, vertex, edgeDestination):
 		"""
-		remove the edge from vertex to edgeDestination
-		if the edge does not exist it will print "No such edge"
+		Remove the edge from vertex to edgeDestination
+		If the edge does not exist it will print "No such edge"
 		"""
 
 		try:
@@ -275,36 +273,3 @@ class Graph():
 
 
 
-
-
-#### TEST ####
-
-if __name__ == '__main__':
-
-	from datetime import datetime as dt 
-
-	graph = Graph()
-
-	start = dt.now()
-
-	graph.randomlyGenerate(10, 50, 1, 10, False)
-
-	print("Time taken to generate:", (dt.now() - start).microseconds)
-
-	print(graph.edges)
-	# print(graph.bidirectional)
-	print("Edges:", graph.noEdges)
-
-	graph.removeEdge(graph.edges[0][0], graph.edges[0][1])
-
-	print(graph.edges)
-	print(graph.noVertices)
-
-	graph.removeVertex(0)
-
-	print(graph.noVertices)
-	print(graph.edges)
-
-	print("")
-
-	print(graph.graphDict)
