@@ -28,9 +28,12 @@ def loadGraph():
 		weightMinimum = int(input(""))
 		print("Maximum edge weight?")
 		weightMaximum = int(input(""))
+		print("Bidirectional? (T/F)")
+		inp = input("")
+		bidirectional = True if inp == 'T' else False
 
 		graph = Graph()
-		graph.randomlyGenerate(noVertices, noEdges, weightMinimum, weightMaximum)
+		graph.randomlyGenerate(noVertices, noEdges, weightMinimum, weightMaximum, bidirectional)
 
 	return graph
 
