@@ -20,7 +20,6 @@ def iterativeDeepeningAStarSearch(graph, start, goal, heuristic):
 		try:
 			return AStarSearch(graph, start, goal, heuristic, limit)
 
-
 		# Increment the limit
 		except:
 			limit += 1
