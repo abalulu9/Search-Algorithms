@@ -4,6 +4,35 @@
 # Multiple edges between two nodes are not allowed 
 
 from random import randint
+import json
+
+def loadGraph():
+
+	print("Please enter the destination of the graph to use, or 0 for a random graph")
+	filePath = input("")
+
+	graph = None
+
+	if filePath != '0':
+
+		with open(filePath, 'r') as fp:
+			graph = Graph(json.load(fp))
+
+	else:
+
+		print("How many vertices?")
+		noVertices = int(input(""))
+		print("How many edges?")
+		noEdges = int(input(""))
+		print("Minimum edge weight?")
+		weightMinimum = int(input(""))
+		print("Maximum edge weight?")
+		weightMaximum = int(input(""))
+
+		graph = Graph()
+		graph.randomlyGenerate(noVertices, noEdges, weightMinimum, weightMaximum)
+
+	return graph
 
 class Graph():
 	
