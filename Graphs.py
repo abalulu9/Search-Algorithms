@@ -57,7 +57,7 @@ class Graph():
 		if noEdges > noVertices ** 2:
 			raise Exception("Too many edges to fit into graph")
 
-		self.graphDict = {i : {} for i in range(noVertices)}
+		self.graphDict = {str(i) : {} for i in range(noVertices)}
 
 		iterator = iter(range(noEdges))
 
@@ -67,13 +67,13 @@ class Graph():
 			while True:
 
 				# Randomly select a vertex
-				vertex = randint(0, noVertices-1)
+				vertex = str(randint(0, noVertices-1))
 
 				# Randomly select an edge destination, if bidirectional and the last edge then a loop must be created
-				if i == noEdges - 1:
+				if int(i) == noEdges - 1:
 					edge = vertex
 				else:
-					edge = randint(0, noVertices-1)
+					edge = str(randint(0, noVertices-1))
 
 				# If the edge doesn't already exist
 				if edge not in self.graphDict[vertex].keys():
