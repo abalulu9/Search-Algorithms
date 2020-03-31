@@ -124,6 +124,14 @@ class Graph():
 
 		self.bidirectional = bidirectional
 
+	@property 
+	def totalWeight(self):
+		"""The total weight of all the edges in the graph"""
+		weight = 0
+		for vertex in self.vertices:
+			weight += sum(self.graphDict[vertex].values())
+		return weight
+
 	def transformIntoBidirectional(self):
 		"""
 		Tranform the graph into a bidrectional one
@@ -296,9 +304,3 @@ class Graph():
 
 	def __str__(self):
 		return f"A graph with {self.noVertices} vertices and {self.noEdges} edges"
-	
-
-
-
-
-
